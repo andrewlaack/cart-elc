@@ -13,9 +13,13 @@ Also included in this repository are our implementations of HHCARTA and HHCARTD.
 - Python 3.8+
 - NumPy
 - scikit-learn (for loading datasets)
+- pandas
 - A C++ compiler (e.g., 'g++')
 - Make
 - Graphviz (for rendering dot output)
+- setuptools
+- pybind11
+- python3-dev
 
 If you encounter issues running these instructions on Linux, please feel free to open an issue. However, please note that if you are viewing this repository on GitHub, it is a downstream of the canonical repository at https://git.laack.co/cart-elc.
 
