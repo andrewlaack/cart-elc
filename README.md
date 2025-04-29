@@ -17,7 +17,7 @@ Also included in this repository are our implementations of HHCARTA and HHCARTD.
 - A C++ compiler (e.g., 'g++')
 - Make
 - Graphviz (for rendering dot output)
-- setuptools
+- Setuptools
 - pybind11
 - python3-dev
 
