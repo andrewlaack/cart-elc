@@ -1,6 +1,6 @@
 # CART-ELC
 
-This is the source code for the implementation of CART-ELC we used in our paper. For details about the algorithm see (COMING SOON!).
+This is the source code for the implementation of CART-ELC we used in our paper.
 
 Also included in this repository are our implementations of HHCARTA and HHCARTD. These are not described in our usage section, but they are simple decision tree classifiers written in Python.
 
