@@ -21,7 +21,7 @@ Also included in this repository are our implementations of HHCARTA and HHCARTD.
 - pybind11
 - python3-dev
 
-If you encounter issues running these instructions on Linux, please feel free to open an issue.
+If you encounter issues on Linux, please feel free to open an issue.
 
 ## Run Experiments
 
