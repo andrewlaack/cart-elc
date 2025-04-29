@@ -21,7 +21,7 @@ Also included in this repository are our implementations of HHCARTA and HHCARTD.
 - pybind11
 - python3-dev
 
-If you encounter issues running these instructions on Linux, please feel free to open an issue. However, please note that if you are viewing this repository on GitHub, it is a downstream of the canonical repository at https://git.laack.co/cart-elc.
+If you encounter issues running these instructions on Linux, please feel free to open an issue.
 
 ## Run Experiments
 
