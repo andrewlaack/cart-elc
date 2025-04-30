@@ -2,7 +2,7 @@
 
 This is the source code for the implementation of CART-ELC we used in our paper.
 
-Also included in this repository are our implementations of HHCART(A) and HHCART(D). These are not described in our usage section, but they are simple decision tree classifiers written in Python.
+Also included in this repository are our implementations of HHCART(A) and HHCART(D). These are not described in our usage section, but they are simple oblique decision tree classifiers written in Python.
 
 **Note:** The .tex source files for both the paper and an accompanying presentation will be added to this repository once the paper has been published.
 
