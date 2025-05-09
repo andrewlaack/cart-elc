@@ -1,5 +1,9 @@
 # CART-ELC
 
+CART-ELC is an oblique decision tree induction algorithm. Our approach has a comparatively high computational cost, but the resulting models often have higher classification accuracies and better interpretability. Given the computational cost of our algorithm, it is best applied to small datasets ($n < 5000$). 
+
+Our paper is currently under review at TMLR, but is accessible on [arXiv](https://doi.org/10.48550/arXiv.2505.05402). 
+
 This repository contains the following:
 
 ### Implementations
@@ -18,7 +22,7 @@ This repository contains the following:
 ### Documentation
 
 - Usage instructions / implementation details
-- Source files for our [paper under review at TMLR](https://doi.org/10.48550/arXiv.2505.05402)
+- Source files for our paper
 - Source files for our presentation
 
 # Usage
