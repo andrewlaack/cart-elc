@@ -211,7 +211,6 @@ compile_commands.json
 CTestTestfile.cmake
 _deps
 
-*.pdf
 *.png
 *.jpg
 *.log
