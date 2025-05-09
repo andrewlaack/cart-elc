@@ -1,0 +1,37 @@
+Results:
+
+gini:
+LCs: 1, Depth: 1 Avg Accuracy: 81.8 (Std: 0.7), Avg # of Leaves: 2.0 (Std: 0.0)
+LCs: 1, Depth: 2 Avg Accuracy: 83.5 (Std: 0.7), Avg # of Leaves: 4.0 (Std: 0.0)
+LCs: 1, Depth: 3 Avg Accuracy: 81.0 (Std: 1.1), Avg # of Leaves: 8.0 (Std: 0.0)
+LCs: 1, Depth: 4 Avg Accuracy: 81.2 (Std: 1.4), Avg # of Leaves: 14.6 (Std: 0.3)
+LCs: 1, Depth: 5 Avg Accuracy: 81.6 (Std: 1.3), Avg # of Leaves: 23.6 (Std: 0.4)
+LCs: 2, Depth: 1 Avg Accuracy: 82.2 (Std: 0.8), Avg # of Leaves: 2.0 (Std: 0.0)
+LCs: 2, Depth: 2 Avg Accuracy: 81.3 (Std: 0.8), Avg # of Leaves: 4.0 (Std: 0.0)
+LCs: 2, Depth: 3 Avg Accuracy: 80.6 (Std: 1.0), Avg # of Leaves: 7.9 (Std: 0.1)
+LCs: 2, Depth: 4 Avg Accuracy: 81.4 (Std: 0.9), Avg # of Leaves: 14.0 (Std: 0.5)
+LCs: 2, Depth: 5 Avg Accuracy: 81.2 (Std: 1.2), Avg # of Leaves: 19.7 (Std: 0.8)
+
+twoing:
+LCs: 1, Depth: 1 Avg Accuracy: 81.8 (Std: 0.7), Avg # of Leaves: 2.0 (Std: 0.0)
+LCs: 1, Depth: 2 Avg Accuracy: 83.5 (Std: 0.7), Avg # of Leaves: 4.0 (Std: 0.0)
+LCs: 1, Depth: 3 Avg Accuracy: 81.0 (Std: 1.1), Avg # of Leaves: 8.0 (Std: 0.0)
+LCs: 1, Depth: 4 Avg Accuracy: 81.3 (Std: 1.4), Avg # of Leaves: 14.6 (Std: 0.3)
+LCs: 1, Depth: 5 Avg Accuracy: 81.5 (Std: 1.3), Avg # of Leaves: 23.6 (Std: 0.4)
+LCs: 2, Depth: 1 Avg Accuracy: 82.2 (Std: 0.8), Avg # of Leaves: 2.0 (Std: 0.0)
+LCs: 2, Depth: 2 Avg Accuracy: 81.3 (Std: 0.8), Avg # of Leaves: 4.0 (Std: 0.0)
+LCs: 2, Depth: 3 Avg Accuracy: 80.6 (Std: 1.1), Avg # of Leaves: 7.9 (Std: 0.1)
+LCs: 2, Depth: 4 Avg Accuracy: 81.2 (Std: 0.9), Avg # of Leaves: 14.0 (Std: 0.5)
+LCs: 2, Depth: 5 Avg Accuracy: 81.2 (Std: 1.3), Avg # of Leaves: 19.7 (Std: 0.7)
+
+information gain:
+LCs: 1, Depth: 1 Avg Accuracy: 81.4 (Std: 0.9), Avg # of Leaves: 2.0 (Std: 0.0)
+LCs: 1, Depth: 2 Avg Accuracy: 81.6 (Std: 0.9), Avg # of Leaves: 4.0 (Std: 0.0)
+LCs: 1, Depth: 3 Avg Accuracy: 80.9 (Std: 0.8), Avg # of Leaves: 8.0 (Std: 0.1)
+LCs: 1, Depth: 4 Avg Accuracy: 80.7 (Std: 1.9), Avg # of Leaves: 13.9 (Std: 0.3)
+LCs: 1, Depth: 5 Avg Accuracy: 81.7 (Std: 1.5), Avg # of Leaves: 21.1 (Std: 0.8)
+LCs: 2, Depth: 1 Avg Accuracy: 81.8 (Std: 1.0), Avg # of Leaves: 2.0 (Std: 0.0)
+LCs: 2, Depth: 2 Avg Accuracy: 81.7 (Std: 0.9), Avg # of Leaves: 4.0 (Std: 0.0)
+LCs: 2, Depth: 3 Avg Accuracy: 80.0 (Std: 1.1), Avg # of Leaves: 7.6 (Std: 0.2)
+LCs: 2, Depth: 4 Avg Accuracy: 81.0 (Std: 1.4), Avg # of Leaves: 12.0 (Std: 0.4)
+LCs: 2, Depth: 5 Avg Accuracy: 81.5 (Std: 1.1), Avg # of Leaves: 16.0 (Std: 0.7)

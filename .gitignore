@@ -1,7 +1,6 @@
 # ---> C++
 # Prerequisites
 *.d
-*.txt
 # graphs and such
 *.html
 
