@@ -1,0 +1,451 @@
+\documentclass[10pt]{beamer}
+\usepackage{booktabs}
+
+\usepackage{animate}
+\usepackage{float}
+\usecolortheme[snowy]{owl}
+\usepackage{listings}
+\usepackage{graphicx} % Load graphicx package for image handling
+\usepackage{natbib}
+
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+\title{CART-ELC: Oblique Decision Tree \\ Induction via Exhaustive Search}
+\author{Andrew D. Laack}
+\institute{University of Wisconsin-Superior}
+\date{May 13, 2025}
+
+\usepackage{xcolor} % Ensure xcolor is loaded
+
+\usepackage{float}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17} % or another compatible version for arXiv
+
+\usepackage{ifthen}
+\usepackage{multirow}
+\usepackage{booktabs}
+
+\newboolean{isFinal}
+\setboolean{isFinal}{false}
+
+\setbeamercolor{section in toc}{fg=white} % Section titles in white
+\setbeamercolor{subsection in toc}{fg=lightgray}
+
+\renewcommand{\thealgorithm}{\arabic{algorithm}:}
+
+\renewcommand{\alglinenumber}[1]{\tiny\color{white}\@#1.}
+
+\usepackage{url}
+\usepackage{hyperref} % Hides ugly link borders
+
+
+\begin{document}
+\section{}
+
+
+\begin{frame}
+\titlepage
+
+\footnotesize
+Source Available:
+
+\texttt{https://github.com/andrewlaack/cart-elc}
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Problem}
+	How can we determine if someone has diabetes based on their BMI?
+\end{frame}
+
+\begin{frame}
+	\frametitle{Visualization}
+	\begin{figure}[h]
+		\centering
+		\includegraphics[scale=.4]{images/dia1.pdf}
+		\caption{Diabetes Dataset \citep{diabetes} Graph}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Solution}
+	\begin{figure}[h]
+		\centering
+		\includegraphics[scale=.4]{images/dia2.pdf}
+		\caption{Diabetes Dataset Graph w/ Boundary}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Tree}
+	\begin{figure}[h]
+		\centering
+		\includegraphics[scale=.3]{images/tree1.pdf}
+		\caption{Tree Representation}
+	\end{figure}
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{But...}
+	62.2\% Accuracy
+	\begin{figure}[h]
+		\centering
+		\includegraphics[scale=.4]{images/dia3.pdf}
+		\caption{Full Diabetes Dataset Graph w/ Boundary}
+	\end{figure}
+\end{frame}
+
+
+
+
+% not density, mass
+
+\begin{frame}
+	\frametitle{Extra Feature}
+	\begin{figure}[h]
+		\centering
+		\includegraphics[scale=.4]{images/dia4.pdf}
+		\caption{Diabetes Dataset w/ Glucose (a bit complicated)}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Pseudocode}
+	
+	\begin{algorithm}[H]
+		\tiny
+		\caption{CART Algorithm \citep{breiman}}
+	\begin{algorithmic}[1]
+	\Function{fit}{samples, labels, featureCount}
+		\If{homogeneous(labels)}
+			\State \Return Node(majorityClass(labels)) 
+		\EndIf
+		\State bestSplit, bestSplittingScore $\gets$ None, worstSplittingScore()
+		\For{sample in samples}
+			\For{feature in range(0,featureCount)}
+				\State currentSplit $\gets$ (feature, sample[feature])
+				\State currentSplittingScore $\gets$ evaluateSplit(currentSplit, samples)
+				\If{ isBetterThan(currentSplittingScore, bestSplittingScore)}
+					\State bestSplittingScore, bestSplit  $\gets$ currentSplittingScore, currentSplit
+				\EndIf
+			\EndFor
+		\EndFor
+		\State left, right $\gets$ splitDataByBestSplit(samples, labels, bestSplit)
+		\If{left is empty or right is empty}
+			\State \Return Node(majorityClass(labels)) 
+		\EndIf
+		\State leftSubtree $\gets$ fit(left.samples, left.labels, featureCount)
+		\State rightSubtree $\gets$ fit(right.samples, right.labels, featureCount)
+		\State tree $\gets$ Node(bestSplit)
+		\State tree.left, tree.right $\gets$ leftSubtree, rightSubtree
+		\State \Return tree
+	\EndFunction
+	\end{algorithmic}
+	\end{algorithm}
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Quantification of Goodness (Splitting Criterion)}
+
+	\begin{equation*}
+		G = p_L \left(1 - \sum_{j\in C} p_{Lj}^2 \right) + p_R \left(1 - \sum_{j \in C} p_{Rj}^2 \right)
+		\label{gini_equ}
+	\end{equation*}
+
+\end{frame}
+
+
+% DEPTH: 1 - 0.7356770833333334
+% DEPTH: 2 - 0.7721354166666666
+% DEPTH: 3 - 0.7734375
+% DEPTH: 4 - 0.78515625
+
+\begin{frame}
+	\frametitle{Boundary (Depth = 1)}
+	\begin{figure}[h]
+		\centering
+		\includegraphics[scale=.35]{images/images/diabetes_tree_bmi_glucose_depth_1.png}
+		\caption{73.6\% Accuracy}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Boundary (Depth = 2)}
+	\begin{figure}[h]
+		\centering
+		\includegraphics[scale=.35]{images/images/diabetes_tree_bmi_glucose_depth_2.png}
+		\caption{77.2\% Accuracy}
+	\end{figure}
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{Boundary (Depth = 3)}
+	\begin{figure}[h]
+		\centering
+		\includegraphics[scale=.35]{images/images/diabetes_tree_bmi_glucose_depth_3.png}
+		\caption{77.3\% Accuracy}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Boundary (Depth = 4)}
+	\begin{figure}[h]
+		\centering
+		\includegraphics[scale=.35]{images/images/diabetes_tree_bmi_glucose_depth_4.png}
+		\caption{78.5\% Accuracy}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Tree (Depth = 4)}
+	\begin{figure}[h]
+		\centering
+		\includegraphics[scale=.225]{images/tree2.pdf}
+		\caption{Tree Representation}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{New Problem}
+	\begin{figure}[h]
+		\centering
+		\includegraphics[scale=.25]{correlation/original_graph.png}
+		\caption{Cancer Diagnosis (Synthetic)}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Boundary (Depth = 1)}
+	\begin{figure}[h]
+		\centering
+		\includegraphics[scale=.25]{correlation/images/decision_tree_depth_1.png}
+		\caption{Cancer Diagnosis (Synthetic)}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Boundary (Depth = 5)}
+	\begin{figure}[h]
+		\centering
+		\includegraphics[scale=.25]{correlation/images/decision_tree_depth_5.png}
+		\caption{Cancer Diagnosis (Synthetic)}
+	\end{figure}
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{Boundary (Depth = 10)}
+	\begin{figure}[h]
+		\centering
+		\includegraphics[scale=.25]{correlation/images/decision_tree_depth_10.png}
+		\caption{Cancer Diagnosis (Synthetic)}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Boundary (Depth = 20)}
+	\begin{figure}[h]
+		\centering
+		\includegraphics[scale=.25]{correlation/images/decision_tree_depth_20.png}
+		\caption{Cancer Diagnosis (Synthetic)}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Tree (Depth = 20)}
+	\begin{figure}[h]
+		\centering
+		\includegraphics[scale=.04]{correlation/tree3.pdf}
+		\caption{Tree Visualization}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Solution}
+	\begin{figure}[h]
+		\centering
+		\includegraphics[scale=.25]{correlation/oblique.png}
+		\caption{Oblique Split}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{How?}
+	\begin{enumerate}
+		\item CART-LC \citep{breiman}
+		\item OC1 \citep{oc1}
+		\item HHCART \citep{hhcart}
+		\item CART-ELC \citep{laack}
+	\end{enumerate}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Pseudocode}
+
+	\begin{algorithm}[H]
+		\tiny
+		\caption{CART-ELC}
+	\begin{algorithmic}[1]
+	\Function{fit}{samples, labels, $m$, $r$}
+		\If{homogeneous(labels)}
+			\State \Return Node(majorityClass(labels)) 
+		\EndIf
+		\State bestSplit, bestSplittingScore $\gets$ None, worstSplittingScore()
+		\For{selectedSamples in combinations(samples, $r$)}
+			\For{selectedFeatures in combinations($m$, $r$)}
+				\State vectorsToPassThrough $\gets$ featureSubset(selectedSamples, selectedFeatures)
+				\State currentSplit $\gets$ findHyperplanePassingThrough(vectorsToPassThrough)
+				\State currentSplittingScore $\gets$ evaluateSplit(currentSplit, samples)
+				\If{ isBetterThan(currentSplittingScore, bestSplittingScore)}
+					\State bestSplittingScore, bestSplit  $\gets$ currentSplittingScore, currentSplit
+				\EndIf
+			\EndFor
+		\EndFor
+		\State left, right $\gets$ splitDataByBestSplit(samples, labels, bestSplit)
+		\If{left is empty or right is empty}
+			\State \Return Node(majorityClass(labels)) 
+		\EndIf
+		\State leftSubtree $\gets$ fit(left.samples, left.labels, $m$, $r$)
+		\State rightSubtree $\gets$ fit(right.samples, right.labels, $m$, $r$)
+		\State tree $\gets$ Node(bestSplit)
+		\State tree.left, tree.right $\gets$ leftSubtree, rightSubtree
+		\State \Return tree
+	\EndFunction
+	\end{algorithmic}
+	\end{algorithm}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Asymptotic Time Complexity per Split (CART-ELC)}
+\[
+	\Theta\left( \binom{n}{r} \cdot \binom{m}{r} \cdot r(r^2 + n) \right)
+\]
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Operations for a Single Split (CART-ELC)}
+
+\begin{table}[h]
+	\centering
+	\footnotesize
+    \caption{Operations for single split assuming multiplicative factor of one, no additive constants, and $r = m$.}
+	\begin{tabular}{lcccccc} 
+		\addlinespace
+		\toprule
+		\multirow{2}{*}{r} & \multicolumn{6}{c}{n}  \\ 
+		\cmidrule(lr){2-7}  
+		& 100 & 500 & 1000 & 5000 & 10000 & 20000 \\ 
+		\midrule
+			1 & 1.01e+04 & 2.50e+05 & 1.00e+06 & 2.50e+07 & 1.00e+08 & 4.00e+08 \\
+			2 & 1.03e+06 & 1.26e+08 & 1.00e+09 & 1.25e+11 & 1.00e+12 & 8.00e+12 \\
+			3 & 5.29e+07 & 3.16e+10 & 5.03e+11 & 3.13e+14 & 5.00e+15 & 8.00e+16 \\
+			4 & 1.82e+09 & 5.31e+12 & 1.68e+14 & 5.22e+17 & 1.67e+19 & 5.34e+20 \\
+			5 & 4.71e+10 & 6.70e+14 & 4.23e+16 & 6.53e+20 & 4.17e+22 & 2.67e+24 \\
+			6 & 9.73e+11 & 6.77e+16 & 8.50e+18 & 6.54e+23 & 8.35e+25 & 1.07e+28 \\
+			7 & 1.67e+13 & 5.71e+18 & 1.43e+21 & 5.46e+26 & 1.39e+29 & 3.56e+31 \\
+			8 & 2.44e+14 & 4.13e+20 & 2.05e+23 & 3.90e+29 & 1.99e+32 & 1.02e+35 \\
+			9 & 3.10e+15 & 2.62e+22 & 2.59e+25 & 2.44e+32 & 2.49e+35 & 2.55e+38 \\
+			10 & 3.46e+16 & 1.47e+24 & 2.90e+27 & 1.36e+35 & 2.77e+38 & 5.66e+41 \\
+		\bottomrule
+	\end{tabular}
+	\label{fig:operations}
+\end{table}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Empirical Comparison}
+	\tiny
+
+\begin{table}[h]
+	\centering
+    \caption{Accuracy and tree size comparison across decision tree induction algorithms.}
+	\begin{tabular}{lcccccc} 
+		\addlinespace
+		\toprule
+		\multirow{2}{*}{Algorithm} & \multicolumn{6}{c}{Accuracy}  \\ 
+		\cmidrule(lr){2-7}  
+		& S/G Bright & S/G Dim & Cancer & Iris & Housing & Diabetes \\ 
+		\midrule
+		CART-ELC  & \textbf{98.9 ± 0.2} & \textbf{95.2 ± 0.5} & 96.3 ± 0.4 & 95.1 ± 0.8 & 83.5 ± 0.7 & \textbf{74.5 ± 1.3}  \\
+
+		HHCART(A) & 98.3 ± 0.5 & 93.7 ± 0.8 & \textbf{96.9 ± 0.3} &  \textbf{95.5 ± 1.4} &  \textbf{83.9 ± 0.8} & 73.2 ± 1.2  \\
+		HHCART(D) & 98.1 ± 0.4 & 93.7 ± 0.9 & \textbf{96.9 ± 0.3} &  94.3 ± 1.5 &  82.2 ± 1.4 & 73.2 ± 1.2  \\
+		OC1       & \textbf{98.9 ± 0.2} & 95.0 ± 0.3 & 96.2 ± 0.3 & 94.7 ± 3.1 & 82.4 ± 0.8 & 74.4 ± 1.0  \\
+		OC1-AP    & 98.1 ± 0.2 & 94.0 ± 0.2 & 94.5 ± 0.5 & 92.7 ± 2.4 & 81.8 ± 1.0 & 73.8 ± 1.0  \\
+		CART-LC   & 98.8 ± 0.2 & 92.8 ± 0.5 & 95.3 ± 0.6 & 93.5 ± 2.9 & 81.4 ± 1.2 & 73.7 ± 1.2  \\
+		CART-AP   & 98.5 ± 0.5 & 94.2 ± 0.7 & 95.0 ± 1.6 & 93.8 ± 3.7 & 82.1 ± 3.5 & 73.9 ± 3.4  \\
+		C4.5      & 98.5 ± 0.5 & 93.3 ± 0.8 & 95.3 ± 2.0 & 95.1 ± 3.2 & 83.2 ± 3.1 & 71.4 ± 3.3  \\ 
+		\midrule
+		\multirow{2}{*}{Algorithm} & \multicolumn{6}{c}{Tree Size}  \\ 
+		\cmidrule(lr){2-7}  
+		& S/G Bright & S/G Dim & Cancer & Iris & Housing & Diabetes \\ 
+		\midrule
+		CART-ELC  & \textbf{3.7 ± 0.2}  & \textbf{9.8 ± 4.2}  & \textbf{2.0 ± 0.0}  & 4.8 ± 0.1  & \textbf{4.0 ± 0.0}  & \textbf{4.0 ± 0.0}  \\
+		HHCART(A) & 6.1 ± 0.3  & 14.6 ± 4.8  & \textbf{2.0 ± 0.0}  & \textbf{3.1 ± 0.1}  & 7.8 ± 0.2  & \textbf{4.0 ± 0.0}  \\
+		HHCART(D) & 6.3 ± 0.4  & 14.9 ± 5.0  & \textbf{2.0 ± 0.0}  & 4.7 ± 0.1  & 23.3 ± 0.8  & \textbf{4.0 ± 0.0}  \\
+		OC1       & 4.3 ± 1.0  & 13.0 ± 8.7  & 2.8 ± 0.9  & \textbf{3.1 ± 0.2}  & 6.9 ± 3.2  & 5.4 ± 3.8  \\
+		OC1-AP    & 6.9 ± 2.4  & 29.3 ± 8.8  & 6.4 ± 1.7  & 3.2 ± 0.3  & 8.6 ± 4.5  & 11.4 ± 7.5  \\
+		CART-LC   & 3.9 ± 1.3  & 24.2 ± 8.7  & 3.5 ± 0.9  & 3.2 ± 0.3  & 5.8 ± 3.2  & 8.0 ± 5.2  \\
+		CART-AP   & 13.9 ± 5.7  & 30.4 ± 10.0  & 11.5 ± 7.2  & 4.3 ± 1.6  & 15.1 ± 10  & 11.5 ± 9.1  \\
+		C4.5      & 14.3 ± 2.2  & 77.9 ± 7.4  & 9.8 ± 2.2  & 4.6 ± 0.8  & 28.2 ± 3.3  & 56.3 ± 7.9  \\ 
+		\bottomrule
+	\end{tabular}
+	\label{fig:results}
+\end{table}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Cohen's d}
+	\tiny
+
+\begin{table}[h]
+	\centering
+	\caption{Cohen's d effect size for accuracies between various models and CART-ELC. Comparisons with $p < 0.05$ are bolded.}
+	\begin{tabular}{lccccccc} 
+		\addlinespace
+		\toprule
+		\multirow{1}{*}{Algorithm} & \multirow{1}{*}{S/G Bright} & \multirow{1}{*}{S/G Dim} & \multirow{1}{*}{Cancer} & \multirow{1}{*}{Iris} & \multirow{1}{*}{Housing} & \multirow{1}{*}{Diabetes} \\ 
+		\midrule
+
+		HHCART(A) & \textbf{1.576} & \textbf{2.249} & \textbf{-1.697} & -0.351 & -0.532 & \textbf{1.039} \\
+		HHCART(D) & \textbf{2.530} & \textbf{2.060} & \textbf{-1.697} & 0.666 & \textbf{1.175} & \textbf{1.039} \\
+	OC1 & 0.000 & 0.485 & 0.283 & 0.177 & \textbf{1.463} & 0.086 \\
+	CART-LC & 0.500 & \textbf{4.800} & \textbf{1.961} & 0.752 & \textbf{2.138} & 0.639 \\
+
+	OC1-AP & \textbf{4.000} & \textbf{3.151} & \textbf{3.976} & \textbf{1.342} & \textbf{1.970} & 0.604 \\
+	CART-AP & \textbf{1.050} & \textbf{1.644} & \textbf{1.115} & 0.486 & 0.555 & 0.233 \\
+	C4.5 & \textbf{1.050} & \textbf{2.848} & 0.693 & 0.000 & 0.133 & \textbf{1.236} \\
+    \bottomrule
+\end{tabular}
+\label{fig:cohens_d}
+\end{table}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Future Directions}
+
+	\begin{enumerate}
+		\item Smaller Subsets of Candidates
+			\begin{enumerate}
+				\item Active Sampling
+				\item Feature Selection
+			\end{enumerate}
+
+		\item Random Forests \citep{rndfrst}
+		\item Stochastic Gradient Boosting \citep{sgboost}
+	\end{enumerate}
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{References}
+\bibliographystyle{plain}  
+\bibliography{references}
+\end{frame}
+
+\end{document}
